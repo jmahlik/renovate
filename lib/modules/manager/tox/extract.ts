@@ -134,3 +134,46 @@ export function extractPackageFile(
 
   return deps.length ? { deps } : null;
 }
+
+import util from 'node:util';
+
+import ini from 'ini';
+
+const configIni = require('config.ini');
+
+export function parseWithIni(content: string): any {
+  let parsed = ini.parse(content);
+  console.log(util.inspect(parsed, { depth: null }));
+  return parsed;
+}
+
+export function parseWithConfigIni(content: string): any {
+  let parsed = configIni.parse(content);
+  console.log(util.inspect(parsed, { depth: null }));
+  return parsed;
+}
+
+export function parseWithConfigIniParser(content: string): any {
+  // var delimiter = "\r\n"; //or "\n" for *nux
+  const delimiter = '\n';
+  var ConfigIniParser = require('config-ini-parser').ConfigIniParser;
+  let parser = new ConfigIniParser(delimiter); //If don't assign the parameter delimiter then the default value \n will be used
+  parser.parse(content);
+  let parsed = parser.items;
+  // var value = parser.get("section", "option");
+  // value = parser.get(null, "option"); //access the default section
+  // value = parser.getOptionFromDefaultSection("option"); //access the default section
+  // parser.stringify('\n'); //get all the ini file content as a string
+  // let parsed = configIni.parse(content);
+  console.log(util.inspect(parsed, { depth: null }));
+  return parsed;
+}
+
+const ConfigParser = require('configparser');
+
+export function parseWithConfigParser(content: string): any {
+  const config = new ConfigParser();
+  config.read('./lib/modules/manager/tox/__fixtures__/tox-ini-1.txt');
+  console.log(util.inspect(config, { depth: null }));
+  return config;
+}

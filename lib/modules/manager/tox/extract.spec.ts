@@ -1,5 +1,11 @@
 import { Fixtures } from '../../../../test/fixtures';
-import { extractPackageFile } from '.';
+import {
+  extractPackageFile,
+  parseWithIni,
+  parseWithConfigIni,
+  parseWithConfigIniParser,
+  parseWithConfigParser,
+} from './extract';
 
 describe('modules/manager/tox/extract', () => {
   describe('extractPackageFile()', () => {
@@ -26,6 +32,28 @@ describe('modules/manager/tox/extract', () => {
           { depName: 'dep-combos2', currentValue: '==1.0.0' },
         ],
       });
+    });
+  });
+  describe('parseWithIni()', () => {
+    it('badini', () => {
+      expect(parseWithIni(Fixtures.get('tox-ini-1.txt'))).toBeNull();
+    });
+  });
+  describe('parseWithIni()', () => {
+    it('badini', () => {
+      expect(parseWithConfigIni(Fixtures.get('tox-ini-1.txt'))).toBeNull();
+    });
+  });
+  describe('parseWithIni()', () => {
+    it('badini', () => {
+      expect(
+        parseWithConfigIniParser(Fixtures.get('tox-ini-1.txt'))
+      ).toBeNull();
+    });
+  });
+  describe('parseWithIni()', () => {
+    it('badini', () => {
+      expect(parseWithConfigParser(Fixtures.get('tox-ini-1.txt'))).toBeNull();
     });
   });
 });
